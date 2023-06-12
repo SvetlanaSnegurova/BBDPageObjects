@@ -1,6 +1,8 @@
-package ru.netology;
+package ru.netology.Page;
 
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.Data.DataGenerator;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 

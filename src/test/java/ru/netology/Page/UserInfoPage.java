@@ -1,8 +1,10 @@
-package ru.netology;
+package ru.netology.Page;
 
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.Data.DataGenerator;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.page;
 
 public class UserInfoPage {
 
@@ -14,7 +16,7 @@ public class UserInfoPage {
         loginField.setValue(info.getLogin());
         passwordField.setValue(info.getPassword());
         loginButton.click();
-        return new VerificationPage();
+        return page(VerificationPage.class);
     }
 }
 

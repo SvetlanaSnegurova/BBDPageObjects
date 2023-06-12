@@ -1,9 +1,7 @@
-package ru.netology;
+package ru.netology.Page;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.val;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -22,9 +20,9 @@ public class DashboardPage {
     }
 
     private int extractBalance(String text) {
-        val start = text.indexOf(balanceStart);
-        val finish = text.indexOf(balanceFinish);
-        val value = text.substring(start + balanceStart.length(), finish);
+        var start = text.indexOf(balanceStart);
+        var finish = text.indexOf(balanceFinish);
+        var value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
     }
 
@@ -41,14 +39,4 @@ public class DashboardPage {
         transferButton2.click();
         return new TransferCardPage();
     }
-
-    public static int formatWithoutMinusIssue(int secondCardBalance) {
-        if (secondCardBalance < 0) {
-            secondCardBalance = (secondCardBalance - secondCardBalance) + 1000;
-        } else {
-            secondCardBalance = secondCardBalance + secondCardBalance;
-        }
-        return secondCardBalance;
-    }
-
 }

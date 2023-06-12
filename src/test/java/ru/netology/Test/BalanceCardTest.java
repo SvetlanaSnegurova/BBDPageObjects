@@ -1,12 +1,15 @@
-package ru.netology;
+package ru.netology.Test;
 
 import lombok.val;
 import org.junit.jupiter.api.*;
+import ru.netology.Data.DataGenerator;
+import ru.netology.Page.UserInfoPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.DataGenerator.*;
+import static ru.netology.Data.DataGenerator.*;
 
 public class BalanceCardTest {
+
     @BeforeEach
     void setUp() {
         open("http://localhost:9999");
@@ -48,14 +51,14 @@ public class BalanceCardTest {
     @Test
     void shouldAmountMoreBalanceTest() {
         val UserInfoPage = new UserInfoPage();
-        val authInfo = DataGenerator.getAuthInfo();
+        val authInfo = getAuthInfo();
         val verificationPage = UserInfoPage.validLogin(authInfo);
-        val verificationCode = DataGenerator.getVerificationCodeFor(authInfo);
+        val verificationCode = getVerificationCodeFor(authInfo);
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val secondCardBalance = dashboardPage.getCardBalance(getSecondCardNumber().getCardNumber());
         val transferPage = dashboardPage.depositToFirstCard();
-        int amount = DashboardPage.formatWithoutMinusIssue(secondCardBalance);
-        transferPage.transferMoney(amount, DataGenerator.getSecondCardNumber());
+        int amount = DataGenerator.getImpossibleTransfer(secondCardBalance);
+        transferPage.transferMoney(amount, getSecondCardNumber());
         transferPage.amountMoreThanBalance();
 
     }

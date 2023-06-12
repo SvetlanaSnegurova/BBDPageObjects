@@ -1,6 +1,8 @@
-package ru.netology;
+package ru.netology.Data;
 
 import lombok.Value;
+
+import java.util.Random;
 
 public class DataGenerator {
     private DataGenerator() {
@@ -36,5 +38,12 @@ public class DataGenerator {
 
     public static CardInfo getSecondCardNumber() {
         return new CardInfo("5559 0000 0000 0002");
+    }
+
+    public static int generateValidAmount(int balance) {
+        return new Random().nextInt(balance) + 1;
+    }
+    public static int getImpossibleTransfer(int balance) {
+        return Math.abs(balance) + new Random().nextInt(1000);
     }
 }
