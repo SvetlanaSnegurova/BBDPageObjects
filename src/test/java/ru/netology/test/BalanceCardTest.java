@@ -1,12 +1,12 @@
-package ru.netology.Test;
+package ru.netology.test;
 
 import lombok.val;
 import org.junit.jupiter.api.*;
-import ru.netology.Data.DataGenerator;
-import ru.netology.Page.UserInfoPage;
+import ru.netology.data.DataGenerator;
+import ru.netology.page.UserInfoPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.Data.DataGenerator.*;
+import static ru.netology.data.DataGenerator.*;
 
 public class BalanceCardTest {
 
@@ -25,7 +25,7 @@ public class BalanceCardTest {
         val firstCardBalance = dashboardPage.getCardBalance(getFirstCardNumber().getCardNumber());
         val secondCardBalance = dashboardPage.getCardBalance(getSecondCardNumber().getCardNumber());
         val transferPage = dashboardPage.depositToFirstCard();
-        int amount = 1_000;
+        var amount = generateValidAmount(firstCardBalance);
         transferPage.transferMoney(amount, getSecondCardNumber());
         val expectedFirstCardBalanceAfter = firstCardBalance + amount;
         val expectedSecondCardBalanceAfter = secondCardBalance - amount;
@@ -42,7 +42,7 @@ public class BalanceCardTest {
         val verificationCode = DataGenerator.getVerificationCodeFor(authInfo);
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val transferPage = dashboardPage.depositToSecondCard();
-        int amount = 0;
+        var amount = 0;
         transferPage.transferMoney(amount, DataGenerator.getFirstCardNumber());
         transferPage.emptyAmountField();
 
@@ -57,7 +57,7 @@ public class BalanceCardTest {
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val secondCardBalance = dashboardPage.getCardBalance(getSecondCardNumber().getCardNumber());
         val transferPage = dashboardPage.depositToFirstCard();
-        int amount = DataGenerator.getImpossibleTransfer(secondCardBalance);
+        var amount = DataGenerator.getImpossibleTransfer(secondCardBalance);
         transferPage.transferMoney(amount, getSecondCardNumber());
         transferPage.amountMoreThanBalance();
 
@@ -71,7 +71,7 @@ public class BalanceCardTest {
         val verificationCode = getVerificationCodeFor(authInfo);
         val dashboardPage = verificationPage.validVerify(verificationCode);
         val transferPage = dashboardPage.depositToFirstCard();
-        int amount = 1_000;
+        var amount = 1_000;
         transferPage.transferMoney(amount, getFirstCardNumber());
         transferPage.enterAnotherCard();
     }
